@@ -54,7 +54,7 @@ class ViewOrg extends Component {
                 console.log(orgObj.body.uiData.langs);
                 if (orgObj) {
                     
-                  this.state.langs =  orgObj.body.uiData.langs; 
+//this.state.langs =  orgObj.body.uiData.langs; 
                   console.log(this.state);
                     this.setState({ 
                         orgId: orgObj.header.orgId, 
@@ -228,7 +228,7 @@ class ViewOrg extends Component {
             <div className="App">
                 <form>
                     Languages:
-          <ul>
+                    <ul>
                         {options}
                     </ul>
 
@@ -293,7 +293,7 @@ class ViewOrg extends Component {
                                     <div key={idx}>
                                         Text ({lang}): <input type="text" value={dashboard.dText.lang} name="dText" onChange={this.handleDashboardValueChange(indx, lang)} /><br />
                                     </div>
-                                ))}
+                                ))} 
                                 Id: <input type="text" value={dashboard.dId} name="dId" onChange={this.handleDashboardValueChange(indx)} /><br />
                                 Type: <input type="text" value={dashboard.dType} name="dType" onChange={this.handleDashboardValueChange(indx)} /><br />
                                 Runs On: <input type="text" value={dashboard.dRunsOn} name="dRunsOn" onChange={this.handleDashboardValueChange(indx)} /><br />
@@ -302,7 +302,7 @@ class ViewOrg extends Component {
                                 <button type="button" onClick={this.handleRemoveDashboard(indx)}>Remove(X)</button>
                             </div>
                         </div>
-                    ))}
+                    ))} 
                     <button type="button" onClick={this.handleAddDashboard}>Add(+)</button>
                     <br /> <br />
                     <button type="submit" onClick={this._handleSubmit}>Submit</button>

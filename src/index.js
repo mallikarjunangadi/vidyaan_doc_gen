@@ -5,12 +5,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import OrgList from './components/OrgList';
 import App from './App';
 import ViewOrg from './components/ViewOrg'; 
+import CreateOrg from './components/CreateOrg'; 
 
 ReactDOM.render(
   <Router>
       <div>
         <Route exact path='/' component={App} />
         <Route path='/OrgList' component={OrgList} /> 
+        <Route path='/CreateOrg' component={CreateOrg} /> 
         <Route path='/ViewOrg/:id' component={ViewOrg} /> 
       </div>
   </Router>, 

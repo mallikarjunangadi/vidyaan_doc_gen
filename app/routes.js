@@ -34,17 +34,25 @@ module.exports = (app) => {
        })
     })
     
-  /*  
-    app.get('/addOrgs', function(req, res) {
+  
+    app.post('/AddOrg', function(req, res) {
         var db = dbConfig.getDb();
-         db.collection(dbConfig.orgCol).insert(orgArr, (err, data) => {
+     //  console.log(req); 
+        console.log(req.body); 
+        var temp = JSON.parse(req.body);
+        
+        console.log(temp);
+
+         db.collection(dbConfig.orgCol).insert(req.body, (err, data) => {
              if(err) {
                 return console.log(err);
              }
-             console.log('org data inserted successfully...')
+             console.log('org data inserted successfully...');
+             return res.send({data:"", message:"new org added successfully", done: true}); 
          }) 
-    })  
-        
+    })
+
+  /*        
     app.get('/addUsers', function(req, res) {
          var db = dbConfig.getDb();
          db.collection(dbConfig.userCol).insert(userArr, (err, data) => {

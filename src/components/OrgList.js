@@ -7,6 +7,11 @@ class OrgList extends Component {
   constructor(props) {
     super(props);
     this.state = { organisations: [] };
+    this.handleCreateNewOrg = this.handleCreateNewOrg.bind();
+  }
+
+  handleCreateNewOrg() {
+       
   }
 
   componentDidMount() {
@@ -33,6 +38,8 @@ class OrgList extends Component {
       <div className="row OrgListMainDiv">
         <div className="col-md-4">
           <h2>Side panel</h2>
+          
+          <Link to={'/CreateOrg'}>Create New Org</Link>
         </div>
         <div className="col-md-8 orgListBodyDiv">
           <div>{orgsList}</div>
