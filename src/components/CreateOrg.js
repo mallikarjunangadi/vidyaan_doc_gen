@@ -213,40 +213,17 @@ class CreateOrg extends Component {
       }
     }
     console.log(JSON.stringify(documentObj));
-    /* 
-        $.ajax({
-          type: "POST",
-          url: 'http://localhost:8080/AddOrg',
-          data: documentObj,
-          success: this.handleSubmitSuccess,
-          error: this.handleSubmitFailure,
-          dataType: 'json'
-        }); 
-    
-    */
-    var data = new FormData();
-    data.append("json", JSON.stringify(documentObj));
-
-    fetch("http://localhost:8080/AddOrg",
-      {
-        method: "POST",
-        body: data,
-        headers: {'Content-Type':'application/x-www-form-urlencoded'}
-      })
-      .then(function (res) { console.log(res) })
-      .then(function (data) { console.log(data) })
-
-    /* 
-       axios({
+      
+       axios({ 
          method: 'post',
          url: 'http://localhost:8080/AddOrg',
-         data: data
+         data: documentObj 
        }).then(response => {
          console.log(response);
        }).catch(function (error) {
          console.log(error);
        })
-     */
+     
   }
 
   handleSubmitSuccess() {

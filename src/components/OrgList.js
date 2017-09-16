@@ -37,7 +37,6 @@ class OrgList extends Component {
     return (
       <div className="row OrgListMainDiv">
         <div className="col-md-4">
-          <h2>Side panel</h2>
           
           <Link to={'/CreateOrg'}>Create New Org</Link>
         </div>

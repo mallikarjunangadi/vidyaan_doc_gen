@@ -3,8 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var dbConfig = require('./app/dbConfig/db');
 var port = process.env.PORT || 8080;
-
+ 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname+"/src"));
 dbConfig.connect(function(err, db) {
     if(err) {

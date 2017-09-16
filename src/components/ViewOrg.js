@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link, Router } from 'react-router-dom';
 
 class ViewOrg extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class ViewOrg extends Component {
         this.handleChannelValueChange = this.handleChannelValueChange.bind(this);
         this.handleRemoveChannel = this.handleRemoveChannel.bind(this);
         this.handleAddChannel = this.handleAddChannel.bind(this);
+        this.getUsersList = this.getUsersList.bind(this);
     }
 
     componentDidMount() {
@@ -53,18 +55,18 @@ class ViewOrg extends Component {
                 var orgObj = response.data.data[0];
                 console.log(orgObj.body.uiData.langs);
                 if (orgObj) {
-                    
-//this.state.langs =  orgObj.body.uiData.langs; 
-                  console.log(this.state);
-                    this.setState({ 
-                        orgId: orgObj.header.orgId, 
+
+                    //this.state.langs =  orgObj.body.uiData.langs; 
+                    console.log(this.state);
+                    this.setState({
+                        orgId: orgObj.header.orgId,
                         orgName: orgObj.body.uiData.orgName,
                         orgLogo: orgObj.body.uiData.orgLogo,
                         slideImages: orgObj.body.uiData.slides,
                         feedsArr: orgObj.body.uiData.feeds,
                         dashboardArr: orgObj.body.uiData.dashboard,
-                        superAdmin : orgObj.body.appData.superAdmin,
-                        superModerator : orgObj.body.appData.superModerator
+                        superAdmin: orgObj.body.appData.superAdmin,
+                        superModerator: orgObj.body.appData.superModerator
                     });
                 }
                 console.log(this.state);
@@ -212,7 +214,32 @@ class ViewOrg extends Component {
         }
     }
 
-    
+    getUsersList() {
+        /*  this.props.navigator.push({
+                  orgId: this.state.orgId, 
+                  orgName: this.state.orgName
+          });
+        */
+   
+        this.props.router.push({
+            pathname: '/UsersList',
+            state: {
+                orgId: this.state.orgId,
+                orgName: this.state.orgName 
+            }
+        })
+                                                                                                                             
+        //   this.context.router.history.push('/UsersList');
+        /*  
+           history.push({
+               pathname: '/UsersList',
+               userDetails: {
+                   orgId: this.state.orgId,
+                   orgName: this.state.orgName
+               }
+           })
+         */
+    }
 
     render() {
 
@@ -225,88 +252,93 @@ class ViewOrg extends Component {
         });
 
         return (
-            <div className="App">
-                <form>
-                    Languages:
+            <div className="row">
+                <div className="col-md-5">
+                    <Link to="/UsersList">Users List</Link>
+                </div>
+                <div className="col-md-7">
+                    <form>
+                        Languages:
                     <ul>
-                        {options}
-                    </ul>
+                            {options}
+                        </ul>
 
-                    <h3>Organisation Information</h3>
-                    Organization Id : <input type="text" value={this.state.orgId} onChange={(e) => this.setState({ orgId: e.target.value })} /><br />
-                    {this.state.langs.map((lang, indx) => (
-                        <div key={indx}>
-                            Organization Name ({lang}): <input type="text" value={this.state.orgName.lang} onChange={this.handleOrgNameChange(lang)} /><br />
-                        </div>
-                    ))}
+                        <h3>Organisation Information</h3>
+                        Organization Id : <input type="text" value={this.state.orgId} onChange={(e) => this.setState({ orgId: e.target.value })} /><br />
+                        {this.state.langs.map((lang, indx) => (
+                            <div key={indx}>
+                                Organization Name ({lang}): <input type="text" value={this.state.orgName.lang} onChange={this.handleOrgNameChange(lang)} /><br />
+                            </div>
+                        ))}
 
-                    Organization Logo: <input type="file" accept="image" onChange={this._handleProfilePicChange} /><br />
-                    Sliding Images: <input type="file" accept="image" onChange={this._handleSlidePicChange} multiple /><br />
+                        Organization Logo: <input type="file" accept="image" onChange={this._handleProfilePicChange} /><br />
+                        Sliding Images: <input type="file" accept="image" onChange={this._handleSlidePicChange} multiple /><br />
 
-                    <h3>AppData Information</h3>
-                    Super Admin: <input type="text" value={this.state.superAdmin} onChange={(e) => this.setState({ superAdmin: e.target.value })} /><br />
-                    Super Moderator: <input type="text" value={this.state.superModerator} onChange={(e) => this.setState({ superModerator: e.target.value })} /><br />
-                    <br />
-                    {this.state.channelsArr.map((channel, indx) => (
-                        <div key={indx}>
-                            <div>
-                                Channel Id: <input type="text" value={channel.channelId} name="channelId" onChange={this.handleChannelValueChange(indx)} /><br />
-                                Channel Name: <input type="text" value={channel.channelName} name="channelName" onChange={this.handleChannelValueChange(indx)} /><br />
-                                Admin: <input type="text" value={channel.admin} name="admin" onChange={this.handleChannelValueChange(indx)} /><br />
-                                Moderator: <input type="text" value={channel.moderator} name="moderator" onChange={this.handleChannelValueChange(indx)} /><br />
+                        <h3>AppData Information</h3>
+                        Super Admin: <input type="text" value={this.state.superAdmin} onChange={(e) => this.setState({ superAdmin: e.target.value })} /><br />
+                        Super Moderator: <input type="text" value={this.state.superModerator} onChange={(e) => this.setState({ superModerator: e.target.value })} /><br />
+                        <br />
+                        {this.state.channelsArr.map((channel, indx) => (
+                            <div key={indx}>
+                                <div>
+                                    Channel Id: <input type="text" value={channel.channelId} name="channelId" onChange={this.handleChannelValueChange(indx)} /><br />
+                                    Channel Name: <input type="text" value={channel.channelName} name="channelName" onChange={this.handleChannelValueChange(indx)} /><br />
+                                    Admin: <input type="text" value={channel.admin} name="admin" onChange={this.handleChannelValueChange(indx)} /><br />
+                                    Moderator: <input type="text" value={channel.moderator} name="moderator" onChange={this.handleChannelValueChange(indx)} /><br />
+                                </div>
+                                <div>
+                                    <button type="button" onClick={this.handleRemoveChannel(indx)}>Remove(X)</button>
+                                </div>
                             </div>
-                            <div>
-                                <button type="button" onClick={this.handleRemoveChannel(indx)}>Remove(X)</button>
-                            </div>
-                        </div>
-                    ))}
-                    <button type="button" onClick={this.handleAddChannel}>Add(+)</button>
+                        ))}
+                        <button type="button" onClick={this.handleAddChannel}>Add(+)</button>
 
-                    <h3>Feeds Information</h3>
-                    {this.state.feedsArr.map((feed, indx) => (
-                        <div key={indx}>
-                            <div>
-                                {this.state.langs.map((lang, ind) => (
-                                    <div key={ind}>
-                                        Name ({lang}): <input type="text" value={feed.fName.lang} name="fName" onChange={this.handleFeedValuesChange(indx, lang)} /><br />
-                                    </div>
-                                ))}
-                                Icon: <input type="text" value={feed.fIcon} name="fIcon" onChange={this.handleFeedValuesChange(indx)} /><br />
-                                Target: <input type="text" value={feed.fTarget} name="fTarget" onChange={this.handleFeedValuesChange(indx)} /><br />
-                                Id: <input type="text" value={feed.fId} name="fId" onChange={this.handleFeedValuesChange(indx)} /><br />
-                                RunsOn: <input type="text" value={feed.fRunsOn} name="fRunsOn" onChange={this.handleFeedValuesChange(indx)} /><br />
+                        <h3>Feeds Information</h3>
+                        {this.state.feedsArr.map((feed, indx) => (
+                            <div key={indx}>
+                                <div>
+                                    {this.state.langs.map((lang, ind) => (
+                                        <div key={ind}>
+                                            Name ({lang}): <input type="text" value={feed.fName.lang} name="fName" onChange={this.handleFeedValuesChange(indx, lang)} /><br />
+                                        </div>
+                                    ))}
+                                    Icon: <input type="text" value={feed.fIcon} name="fIcon" onChange={this.handleFeedValuesChange(indx)} /><br />
+                                    Target: <input type="text" value={feed.fTarget} name="fTarget" onChange={this.handleFeedValuesChange(indx)} /><br />
+                                    Id: <input type="text" value={feed.fId} name="fId" onChange={this.handleFeedValuesChange(indx)} /><br />
+                                    RunsOn: <input type="text" value={feed.fRunsOn} name="fRunsOn" onChange={this.handleFeedValuesChange(indx)} /><br />
+                                </div>
+                                <div>
+                                    <button type="button" onClick={this.handleRemoveFeed(indx)}>Remove X</button>
+                                </div>
                             </div>
-                            <div>
-                                <button type="button" onClick={this.handleRemoveFeed(indx)}>Remove X</button>
-                            </div>
-                        </div>
-                    ))}
-                    <button type="button" onClick={this.handleAddFeed}>Add(+)</button>
+                        ))}
+                        <button type="button" onClick={this.handleAddFeed}>Add(+)</button>
 
-                    <h3>Dashboard Information</h3>
-                    {this.state.dashboardArr.map((dashboard, indx) => (
-                        <div key={indx}>
-                            <div>
-                                Icon: <input type="text" value={dashboard.dIcon} name="dIcon" onChange={this.handleDashboardValueChange(indx)} /><br />
-                                Ref: <input type="text" value={dashboard.dRef} name="dRef" onChange={this.handleDashboardValueChange(indx)} /><br />
-                                {this.state.langs.map((lang, idx) => (
-                                    <div key={idx}>
-                                        Text ({lang}): <input type="text" value={dashboard.dText.lang} name="dText" onChange={this.handleDashboardValueChange(indx, lang)} /><br />
-                                    </div>
-                                ))} 
-                                Id: <input type="text" value={dashboard.dId} name="dId" onChange={this.handleDashboardValueChange(indx)} /><br />
-                                Type: <input type="text" value={dashboard.dType} name="dType" onChange={this.handleDashboardValueChange(indx)} /><br />
-                                Runs On: <input type="text" value={dashboard.dRunsOn} name="dRunsOn" onChange={this.handleDashboardValueChange(indx)} /><br />
+                        <h3>Dashboard Information</h3>
+                        {this.state.dashboardArr.map((dashboard, indx) => (
+                            <div key={indx}>
+                                <div>
+                                    Icon: <input type="text" value={dashboard.dIcon} name="dIcon" onChange={this.handleDashboardValueChange(indx)} /><br />
+                                    Ref: <input type="text" value={dashboard.dRef} name="dRef" onChange={this.handleDashboardValueChange(indx)} /><br />
+                                    {this.state.langs.map((lang, idx) => (
+                                        <div key={idx}>
+                                            Text ({lang}): <input type="text" value={dashboard.dText.lang} name="dText" onChange={this.handleDashboardValueChange(indx, lang)} /><br />
+                                        </div>
+                                    ))}
+                                    Id: <input type="text" value={dashboard.dId} name="dId" onChange={this.handleDashboardValueChange(indx)} /><br />
+                                    Type: <input type="text" value={dashboard.dType} name="dType" onChange={this.handleDashboardValueChange(indx)} /><br />
+                                    Runs On: <input type="text" value={dashboard.dRunsOn} name="dRunsOn" onChange={this.handleDashboardValueChange(indx)} /><br />
+                                </div>
+                                <div>
+                                    <button type="button" onClick={this.handleRemoveDashboard(indx)}>Remove(X)</button>
+                                </div>
                             </div>
-                            <div>
-                                <button type="button" onClick={this.handleRemoveDashboard(indx)}>Remove(X)</button>
-                            </div>
-                        </div>
-                    ))} 
-                    <button type="button" onClick={this.handleAddDashboard}>Add(+)</button>
-                    <br /> <br />
-                    <button type="submit" onClick={this._handleSubmit}>Submit</button>
-                </form>
+                        ))}
+                        <button type="button" onClick={this.handleAddDashboard}>Add(+)</button>
+                        <br /> <br />
+                        <button type="submit" onClick={this._handleSubmit}>Submit</button>
+                    </form>
+                </div>
             </div>
         );
     }
